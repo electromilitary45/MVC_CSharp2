@@ -1,0 +1,27 @@
+﻿@model Empresas
+
+<h1>Crear Empresa</h1>
+
+<form asp-action="Crear" method="post">
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label">Nombre</label>
+        <input type="text" asp-for="Nombre" class="form-control" required>
+        <span asp-validation-for="Nombre"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Ubicacion" class="form-label">Ubicacion</label>
+        <input type="text" asp-for="Ubicacion"  class="form-control" required>
+        <span asp-validation-for="Ubicacion"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telefono" class="form-label">Teléfono</label>
+        <input type="text" asp-for="Telefono" class="form-control" required>
+        <span asp-validation-for="Telefono"> </span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input type="text" asp-for="Email" class="form-control" required>
+        <span asp-validation-for="Email"> </span>
+    </div>
+    <button type="submit" class="btn btn-primary">Crear Empresa</button>
+</form>

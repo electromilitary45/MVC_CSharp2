@@ -1,0 +1,79 @@
+﻿@model List<Usuarios>
+    <h2>Usuarios</h2>
+    
+
+@if (Model.Count == 0)
+{
+    <p>No hay Usuario Registrados</p>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Contrasena</th>
+            <th>Estado</th>
+            <th>Tipo de Usuario</th>
+            <th>Acciones</th>
+        </thead>
+        <tbody>
+            @foreach(var usuarios in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem=>usuarios.Nombre)</td>
+                    <td>@Html.DisplayFor(modelItem=>usuarios.Apellido)</td>
+                    <td>@Html.DisplayFor(modelItem=>usuarios.Email)</td>
+                    <td>@Html.DisplayFor(modelItem=>usuarios.Contrasena)</td>
+                    <td>
+                        @if((usuarios.estado) == 1)
+                        {
+                            <span class="badge rounded-pill bg-success">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill bg-danger">Incactivo</span>
+                        }
+                    </td>
+                    <td>
+                        @if((usuarios.rol) == 1)
+                        {
+                            <p>Cliente</p>
+                        }
+                        else if((usuarios.rol) == 2)
+                        {
+                            <p>Administrador</p>
+                        }
+                        else if((usuarios.rol) == 3)
+                        {
+                            <p>SuperAdmin</p>
+                        }
+                        else
+                        {
+                            <p>Empleado</p>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@usuarios.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                        @if(usuarios.estado == 1)
+                        {
+                            <form asp-action="Desactivar" method="post">
+                                <input type="hidden" name="Id" value="@usuarios.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Desactivar</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="Activar" method="post">
+                                <input type="hidden" name="Id" value="@usuarios.Id" />
+                                <button type="submit" class="btn btn-outline-primary">Activar</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,66 @@
+﻿@model List<Empresas>
+
+<h1>Empresas</h1>
+<a class="btn btn-success" asp-action="Crear">Crear Empresa</a>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total de Empresas</h5>
+                <p class="card-text">@Model.Count</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Ubicacion</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empresa in Model)
+        {
+            <tr>
+                <td>@empresa.Nombre</td>
+                <td>@empresa.Ubicacion</td>
+                <td>@empresa.Telefono</td>
+                <td>@empresa.Email</td>
+                <td>
+                    @if ((empresa.Estado) == 1)
+                    {
+                        <span class="badge rounded-pill bg-success">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="badge rounded-pill bg-danger">Incactivo</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@empresa.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                    @if (empresa.Estado == 1)
+                    {
+                        <form asp-action="Desactivar" method="post">
+                            <input type="hidden" name="Id" value="@empresa.Id">
+                            <button type="submit" class="btn btn-outline-primary">Desactivar</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="Activar" method="post">
+                            <input type="hidden" name="Id" value="@empresa.Id">
+                            <button type="submit" class="btn btn-outline-primary">Activar</button>
+                        </form>
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

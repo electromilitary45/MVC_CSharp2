@@ -1,0 +1,22 @@
+﻿@model List<EmpresasUsuarios>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Id Empresa</th>
+            <th>Id Usuario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empresaUsuario in Model)
+        {
+            <tr>
+                <td>@empresaUsuario.Id</td>
+                <td>@empresaUsuario.IdEmpresa</td>
+                <td>@empresaUsuario.IdUsuario</td>
+            </tr>
+        }
+    </tbody>
+</table>

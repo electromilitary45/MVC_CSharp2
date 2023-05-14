@@ -1,0 +1,38 @@
+﻿@model Usuarios
+
+
+<h2>Crear Usuario</h2>
+
+<form asp-action="Crear" method="post">
+    <div>
+        <label asp-for="Nombre">Nombre</label>
+        <input asp-for="Nombre" />
+        <span asp-validation-for="Nombre"></span>
+
+        <label asp-for="Apellido">Apellidos</label>
+        <input asp-for="Apellido" />
+        <span asp-validation-for="Apellido"></span>
+
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+
+        <label asp-for="Contrasena">Contraseña</label>
+        <input asp-for="Contrasena" />
+        <span asp-validation-for="Contrasena"></span>
+
+        
+        <label asp-for="estado">Estado</label>
+        <select name="estado" id="estado">
+            <option value="1">Activo</option>
+            <option value="2">Inactivo</option>
+        </select>
+
+        
+    </div>
+    <div>
+        <input type="submit" value="Crear"/>
+        <a asp-action="Index">Volver al lsitado</a>
+    </div>
+
+</form>
