@@ -18,7 +18,7 @@ create TABLE empresas(
     telefono varchar(50) not null,
     ubicacion varchar(50) not null,
     email varchar(256) not null,
-	estado bit not null
+	estado int not null
 );
 go
 
@@ -29,7 +29,7 @@ CREATE table usuarios(
     apellido varchar(50) not null,
     email varchar(50) not null,
     contrasena varchar(256) not null,
-	estado bit not null, 
+	estado int not null, 
 );
 go
 
@@ -63,7 +63,7 @@ create procedure sp_actualizarUsuario
 	@apellido varchar(50),
 	@email varchar(50),
 	@contrasena varchar(256),
-	@estado bit,
+	@estado int,
 	@rol int
 	as begin
 		update usuarios set nombre=@nombre,apellido=@apellido,email=@email,contrasena=@contrasena,estado=@estado,rol=@rol 
@@ -71,8 +71,8 @@ create procedure sp_actualizarUsuario
 	end
 go
 
-drop procedure sp_actualizarUsuario
-go
+--drop procedure sp_actualizarUsuario
+--go
 
 
 create procedure sp_desactivarUsuario
@@ -97,8 +97,8 @@ create procedure sp_listarUsuarios
 	end
 go
 
-drop procedure sp_listarUsuarios
-go
+--drop procedure sp_listarUsuarios
+--go
 
 create procedure sp_listarUsuario
 	@id int
@@ -109,19 +109,18 @@ create procedure sp_listarUsuario
 	end
 go
 
-drop procedure sp_listarUsuario
-go
+--drop procedure sp_listarUsuario
+--go
 
 -----EMPRESAS----
 CREATE PROCEDURE sp_insertarEmpresa
 	@nombre varchar(50),
 	@telefono varchar(50),
 	@ubicacion varchar(50),
-	@email varchar(50),
-	@estado bit
+	@email varchar(50)
 	AS BEGIN
 		if(not exists(select * from empresas where email=@email))
-			INSERT INTO empresas(nombre, telefono, ubicacion, email,estado) VALUES(@nombre, @telefono, @ubicacion, @email,@estado)
+			INSERT INTO empresas(nombre, telefono, ubicacion, email,estado) VALUES(@nombre, @telefono, @ubicacion, @email,1)
 	END
 go
 
@@ -131,7 +130,7 @@ create procedure sp_actualizarEmpresa
 	@telefono varchar(50),
 	@ubicacion varchar(50),
 	@email varchar(50),
-	@estado bit
+	@estado int
 	as begin
 		update empresas set nombre=@nombre,telefono=@telefono,ubicacion=@ubicacion,email=@email,estado=@estado where id=@id
 	end
@@ -153,7 +152,7 @@ go
 
 create procedure sp_listarEmpresas
 	as begin
-		select e.id,e.nombre, e.email,e.telefono,e.ubicacion,e.estado
+		select e.id, e.nombre, e.telefono, e.ubicacion, e.email, e.estado 
 		from empresas e
 	end
 go
@@ -161,25 +160,69 @@ go
 create procedure sp_listarEmpresa
 	@id int
 	as begin
-		select * from empresas where id=@id
+		select e.id, e.nombre, e.telefono, e.ubicacion, e.email, e.estado 
+		from empresas e 
+		where id=@id
+	end
+go
+
+-----EMPRESAS USURAIOS------
+create procedure sp_insertarEmpUsu
+	@idEmp int,
+	@idUsu int
+	as begin
+		if(not exists(select * from empresasUsuarios where idEmpresa=@idEmp and idUsuario=@idUsu))
+			insert into empresasUsuarios (idEmpresa, idUsuario) values (@idEmp,@idUsu)
+	end
+go
+
+create procedure sp_actualizarEmpUsu
+	@id int,
+	@idEmp int,
+	@idUsu int
+	as begin
+		update empresasUsuarios set idEmpresa=@idEmp, idUsuario=@idUsu where id=@id
+	end
+go
+
+create procedure sp_listarEmpsUsus
+	as begin
+		select eu.id, eu.idEmpresa, eu.idUsuario
+		from empresasUsuarios eu
+	end
+go
+
+--drop procedure sp_listarEmpsUsus
+--go
+create procedure sp_listarEmpUsu
+	@id int
+	as begin
+		select eu.id, eu.idEmpresa, eu.idUsuario 
+		from empresasUsuarios eu
+		where id=@id
+	end
+go
+
+create procedure sp_eliminarEmpUsu
+	@id int
+	as begin
+		delete empresasUsuarios where id=@id
 	end
 go
 
 
----------------------------------ROLES PREDETERMINADOS-----------------------
-INSERT INTO Roles(nombre) VALUES('Cliente');
-go
-INSERT INTO Roles(nombre) VALUES('Admin');
-go
-INSERT INTO Roles(nombre) VALUES('SuperAdmin');
-go
-INSERT INTO Roles(nombre) VALUES('Empleado');
-go
-
 --------------------------------USUARIOS SUPERADMIN------------------------------
 insert into usuarios(nombre,apellido,email,contrasena,estado,rol) values ('Derek','Leiva','dereklevilla45@gmail.com','12345678',1,3);
+go
 
------selects
+-----selects------
 select * from usuarios
-select * from empresas
+go
 
+select * from empresas
+go
+
+SELECT eu.id, eu.idEmpresa, eu.idUsuario, e.nombre AS NombreEmpresa, u.nombre AS NombreUsuario
+    FROM empresasUsuarios eu
+    INNER JOIN empresas e ON eu.idEmpresa = e.id
+    INNER JOIN usuarios u ON eu.idUsuario = u.id

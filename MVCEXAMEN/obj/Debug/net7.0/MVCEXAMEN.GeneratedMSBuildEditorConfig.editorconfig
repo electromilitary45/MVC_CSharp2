@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = G:\REPOSITORIOS\MVC_CSharp2\MVCEXAMEN
 build_property._RazorSourceGeneratorDebug = 
 
+[G:/REPOSITORIOS/MVC_CSharp2/MVCEXAMEN/Views/Acceso/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjZXNvXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/REPOSITORIOS/MVC_CSharp2/MVCEXAMEN/Views/EmpresaUsuario/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wcmVzYVVzdWFyaW9cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

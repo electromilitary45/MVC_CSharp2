@@ -62,13 +62,6 @@ namespace MVCEXAMEN.Data
                 .WithMany() // Especifica el nombre de la propiedad de navegación en la entidad Usuarios si existe
                 .HasForeignKey(eu => eu.IdUsuario);
             });
-
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("UsuariosClaims");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("UsuariosLogins");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("UsuariosTokens");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UsuariosRoles");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("RolesClaims");
-            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
         }
 
         ////----METODOS PARA LOS PROCEDIMIENTOS ALMACENADOS DE USUARIOS----
@@ -104,6 +97,12 @@ namespace MVCEXAMEN.Data
             Database.ExecuteSqlRaw($"exec sp_activarUsuario {id}");
         }
 
+        public Usuarios sp_encontrarUsuario(string correo,string contrasena)
+        {
+            var usuario = Usuarios.FromSqlRaw("exec sp_encontrarUsuario '{0}','{1}'", correo, contrasena).ToList();
+            return usuario[0];
+        }
+
         ///METODOS PARA LOS PROCEDIMIENTOS ALMACENADOS DE EMPRESAS
         public List<Empresas> sp_listarEmpresas()
         {
@@ -135,6 +134,8 @@ namespace MVCEXAMEN.Data
         {
             Database.ExecuteSqlRaw($"exec sp_activarEmpresa {id}");
         }
+
+        
 
         //Metodos para los procedimientos almacenados de empresasUsuarios
         public List<EmpresasUsuarios> sp_listarEmpsUsus()
