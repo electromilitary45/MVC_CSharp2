@@ -1,6 +1,6 @@
 ﻿@model List<Usuarios>
-    <h2>Usuarios</h2>
-    
+<h2>Usuarios</h2>
+<a class="btn btn-success" asp-action="Crear">Crear Usuario</a>
 
 @if (Model.Count == 0)
 {
@@ -9,6 +9,17 @@
 
 else
 {
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total de Usuarios</h5>
+                    <p class="card-text">@Model.Count</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <table class="table">
         <thead>
             <th>Nombre</th>

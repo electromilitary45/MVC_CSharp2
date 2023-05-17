@@ -27,7 +27,7 @@ namespace MVCEXAMEN.Controllers
         [HttpPost]
         public IActionResult Crear(Usuarios usuarios)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 int rol = Convert.ToInt32(usuarios.rol);
                 _context.sp_registroUsuario(usuarios.Nombre, usuarios.Apellido, usuarios.Email, usuarios.Contrasena,usuarios.rol);
