@@ -281,6 +281,7 @@ select * from usuarios
 go
 select * from empresasUsuarios
 go
+
 --select usuarios.id from usuarios where email='dereklevilla45@gmail'
 --delete from usuarios 
 

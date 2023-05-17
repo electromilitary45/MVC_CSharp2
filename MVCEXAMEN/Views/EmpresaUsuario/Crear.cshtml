@@ -1,0 +1,28 @@
+﻿@model EmpUsuView
+<h2>Crear Empresa Usuario</h2>
+
+@using (Html.BeginForm("Crear", "EmpresaUsuario", FormMethod.Post))
+{
+    <div>
+        <label for="idEmpresa">Empresa:</label>
+        <select id="empresaId" name="idEmpresa" required>
+            @foreach (var empresa in Model.Empresas)
+            {
+                <option value="@empresa.Id">@empresa.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label for="idUsuario">Usuario:</label>
+        <select id="idUsuario" name="idUsuario" required> 
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <option value="@usuario.Id">@usuario.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit">Crear</button>
+}
+

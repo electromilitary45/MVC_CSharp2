@@ -112,6 +112,29 @@ go
 --drop procedure sp_listarUsuario
 --go
 
+create procedure sp_encontrarUsuario
+	@email varchar(50),
+	@contrasena varchar(50)
+	as begin
+		SELECT u.id, u.nombre, u.apellido, u.email, u.contrasena, u.rol, u.estado
+		FROM usuarios u
+		where email=@email and contrasena=@contrasena
+	end
+go
+
+CREATE PROCEDURE sp_ListarUsuariosSinEmpresa
+	AS
+	BEGIN
+		SELECT *
+		FROM usuarios u
+		WHERE NOT EXISTS (
+			SELECT 1
+			FROM empresasUsuarios eu
+			WHERE eu.idUsuario = u.id
+		)
+	END
+go
+
 -----EMPRESAS----
 CREATE PROCEDURE sp_insertarEmpresa
 	@nombre varchar(50),
@@ -187,13 +210,16 @@ go
 
 create procedure sp_listarEmpsUsus
 	as begin
-		select eu.id, eu.idEmpresa, eu.idUsuario
-		from empresasUsuarios eu
+		select eu.id, u.id AS UsuariosId, e.id AS EmpresasId, eu.idEmpresa as idEmpresa, eu.idUsuario as idUsuario,
+		e.nombre as NombreEmpresa,u.nombre as NombreUsuario,u.apellido as apellidoUsuario
+		from empresasUsuarios eu, usuarios u ,empresas e
+		where eu.idEmpresa=e.id and eu.idUsuario=u.id
 	end
 go
 
 --drop procedure sp_listarEmpsUsus
 --go
+
 create procedure sp_listarEmpUsu
 	@id int
 	as begin
@@ -222,7 +248,16 @@ go
 select * from empresas
 go
 
-SELECT eu.id, eu.idEmpresa, eu.idUsuario, e.nombre AS NombreEmpresa, u.nombre AS NombreUsuario
+SELECT eu.id, eu.idEmpresa, eu.idUsuario, e.nombre AS NombreEmpresa, u.nombre AS NombreUsuario 
     FROM empresasUsuarios eu
     INNER JOIN empresas e ON eu.idEmpresa = e.id
     INNER JOIN usuarios u ON eu.idUsuario = u.id
+go
+
+exec sp_encontrarUsuario @email='dereklevilla45@gmail.com', @contrasena='1234578'
+go
+
+exec sp_insertarEmpUsu @idEmp=1,@idUsu=1
+go
+
+delete from empresasUsuarios where id=1

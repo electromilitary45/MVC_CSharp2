@@ -49,18 +49,18 @@ namespace MVCEXAMEN.Data
             modelBuilder.Entity<EmpresasUsuarios>(entity =>
             {
                 entity.ToTable("empresasUsuarios");
-                entity.HasKey(eu => eu.Id);
+
                 entity.Property(eu => eu.Id).HasColumnName("id");
                 entity.Property(eu => eu.IdEmpresa).HasColumnName("idEmpresa").IsRequired();
                 entity.Property(eu => eu.IdUsuario).HasColumnName("idUsuario").IsRequired();
 
-                entity.HasOne(eu => eu.Empresas)
+                entity.HasOne(e => e.Empresas)
                 .WithMany() // Especifica el nombre de la propiedad de navegación en la entidad Empresas si existe
-                .HasForeignKey(eu => eu.IdEmpresa);
+                .HasForeignKey(e => e.IdEmpresa);
 
-                entity.HasOne(eu => eu.Usuarios)
+                entity.HasOne(u => u.Usuarios)
                 .WithMany() // Especifica el nombre de la propiedad de navegación en la entidad Usuarios si existe
-                .HasForeignKey(eu => eu.IdUsuario);
+                .HasForeignKey(e => e.IdUsuario);
             });
         }
 
@@ -97,10 +97,26 @@ namespace MVCEXAMEN.Data
             Database.ExecuteSqlRaw($"exec sp_activarUsuario {id}");
         }
 
-        public Usuarios sp_encontrarUsuario(string correo,string contrasena)
-        {
-            var usuario = Usuarios.FromSqlRaw("exec sp_encontrarUsuario '{0}','{1}'", correo, contrasena).ToList();
-            return usuario[0];
+        public List<Usuarios> sp_ListarUsuariosSinEmpresa() {
+            return Usuarios.FromSqlRaw("exec sp_ListarUsuariosSinEmpresa").ToList();
+        }
+
+        public List<Usuarios> sp_encontrarUsuario(string correo,string contrasena)
+        {   
+
+            var usuario = Usuarios.FromSqlRaw($"exec sp_encontrarUsuario '{0}','{1}'", correo, contrasena).ToList();
+
+
+            if(usuario != null)
+            {
+                return usuario;
+            }
+            else
+            {
+                return null;
+            }
+             
+            
         }
 
         ///METODOS PARA LOS PROCEDIMIENTOS ALMACENADOS DE EMPRESAS
@@ -135,7 +151,7 @@ namespace MVCEXAMEN.Data
             Database.ExecuteSqlRaw($"exec sp_activarEmpresa {id}");
         }
 
-        
+
 
         //Metodos para los procedimientos almacenados de empresasUsuarios
         public List<EmpresasUsuarios> sp_listarEmpsUsus()
@@ -143,9 +159,27 @@ namespace MVCEXAMEN.Data
             return EmpresasUsuarios.FromSqlRaw("exec sp_listarEmpsUsus").ToList();
         }
 
+        public void sp_insertarEmpUsu(int idEmpresa, int idUsuario)
+        {
+            Database.ExecuteSqlRaw($"exec sp_insertarEmpUsu {idEmpresa},{idUsuario}");
+        }
+
+        public EmpresasUsuarios sp_listarEmpUsu(int id) { 
+            var empUsu = EmpresasUsuarios.FromSqlRaw($"exec sp_listarEmpUsu {id}").ToList();
+
+            return empUsu[0];
+        }
+
+        public void sp_eliminarEmpUsu(int id)
+        {
+            Database.ExecuteSqlRaw($"exec sp_eliminarEmpUsu {id}");
+        }
 
 
-        
+
+
+
+
 
 
     }

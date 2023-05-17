@@ -1,5 +1,8 @@
 ﻿@model List<EmpresasUsuarios>
 
+<h1>Empresas</h1>
+<a class="btn btn-success" asp-action="Crear">Relacionar Usuario a Empresa</a>
+
 <table class="table">
     <thead>
         <tr>
@@ -16,6 +19,12 @@
                 <td>@empresaUsuario.Id</td>
                 <td>@empresaUsuario.IdEmpresa</td>
                 <td>@empresaUsuario.IdUsuario</td>
+                <td>
+                    <form asp-action="Eliminar" method="post">
+                        <input type="hidden" name="id" value="@empresaUsuario.Id">
+                        <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>

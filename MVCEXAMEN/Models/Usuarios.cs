@@ -12,6 +12,8 @@ namespace MVCEXAMEN.Models
         public string Contrasena { get; set; }
         public int estado { get; set; }
 
+
+
         public ICollection<EmpresasUsuarios> EmpresasUsuarios { get; set; } = new List<EmpresasUsuarios>();
 
     }
