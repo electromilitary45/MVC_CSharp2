@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCEXAMEN.Data;
 using MVCEXAMEN.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVCEXAMEN.Controllers
 {

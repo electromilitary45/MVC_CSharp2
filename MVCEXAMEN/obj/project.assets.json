@@ -3181,24 +3181,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Derek\\.nuget\\packages\\": {},
-    "G:\\APPS\\VStudio\\Componentes\\NuGetPackages": {}
+    "C:\\Users\\Desarrollo Cnet\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\REPOSITORIOS\\MVC_CSharp2\\MVCEXAMEN\\MVCEXAMEN.csproj",
+      "projectUniqueName": "C:\\Users\\Desarrollo Cnet\\Desktop\\MVC_CSharp2\\MVCEXAMEN\\MVCEXAMEN.csproj",
       "projectName": "MVCEXAMEN",
-      "projectPath": "G:\\REPOSITORIOS\\MVC_CSharp2\\MVCEXAMEN\\MVCEXAMEN.csproj",
-      "packagesPath": "C:\\Users\\Derek\\.nuget\\packages\\",
-      "outputPath": "G:\\REPOSITORIOS\\MVC_CSharp2\\MVCEXAMEN\\obj\\",
+      "projectPath": "C:\\Users\\Desarrollo Cnet\\Desktop\\MVC_CSharp2\\MVCEXAMEN\\MVCEXAMEN.csproj",
+      "packagesPath": "C:\\Users\\Desarrollo Cnet\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Desarrollo Cnet\\Desktop\\MVC_CSharp2\\MVCEXAMEN\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "G:\\APPS\\VStudio\\Componentes\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Derek\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Desarrollo Cnet\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3256,7 +3251,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

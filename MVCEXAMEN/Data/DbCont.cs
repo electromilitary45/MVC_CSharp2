@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
 using Microsoft.EntityFrameworkCore;
 using MVCEXAMEN.Models;
 
@@ -101,22 +101,18 @@ namespace MVCEXAMEN.Data
             return Usuarios.FromSqlRaw("exec sp_ListarUsuariosSinEmpresa").ToList();
         }
 
-        public List<Usuarios> sp_encontrarUsuario(string correo,string contrasena)
-        {   
+        //public List<Usuarios> sp_encontrarUsuario(string correo,string contrasena)
+        //{
+        //    //var usuario = Usuarios.FromSqlRaw($"exec sp_encontrarUsuario '{correo}','{contrasena}'").ToList().FirstOrDefault();
+        //    var usuario = Usuarios.FromSqlRaw($"exec sp_encontrarUsuario '{correo}','{contrasena}'").ToList().FirstOrDefault();
+        //    return usuario;
 
-            var usuario = Usuarios.FromSqlRaw($"exec sp_encontrarUsuario '{0}','{1}'", correo, contrasena).ToList();
 
-
-            if(usuario != null)
-            {
-                return usuario;
-            }
-            else
-            {
-                return null;
-            }
-             
-            
+        //}
+        public Usuarios? sp_encontrarUsuario(string correo, string contrasena)
+        {
+            var usuario = Usuarios.FromSqlRaw($"exec sp_encontrarUsuario '{correo}', '{contrasena}'").AsEnumerable().FirstOrDefault();
+            return usuario;
         }
 
         ///METODOS PARA LOS PROCEDIMIENTOS ALMACENADOS DE EMPRESAS
@@ -166,8 +162,14 @@ namespace MVCEXAMEN.Data
 
         public EmpresasUsuarios sp_listarEmpUsu(int id) { 
             var empUsu = EmpresasUsuarios.FromSqlRaw($"exec sp_listarEmpUsu {id}").ToList();
-
-            return empUsu[0];
+            if (empUsu.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return empUsu[0];
+            }
         }
 
         public void sp_eliminarEmpUsu(int id)

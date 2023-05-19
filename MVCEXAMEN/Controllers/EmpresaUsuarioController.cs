@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using MVCEXAMEN.Data;
 using MVCEXAMEN.Models;
+
 namespace MVCEXAMEN.Controllers
 {
+    
     public class EmpresaUsuarioController : Controller
     {
         private readonly DbCont _context;

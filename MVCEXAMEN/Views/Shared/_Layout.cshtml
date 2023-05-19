@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor contxt
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,15 +21,30 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Empresa" asp-action="Index">Empresas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="EmpresaUsuario" asp-action="Index">EmpresasUsuario</a>
-                        </li>
+
+                        @if ((contxt.HttpContext.Session.GetInt32("log")) == 1)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Index">Usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Empresa" asp-action="Index">Empresas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="EmpresaUsuario" asp-action="Index">EmpresasUsuario</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <form asp-controller="Acceso" asp-action="Logout" method="post">
+                                    
+                                    <button type="submit" class="nav-link text-dark">Cerrar sesión</button>
+                                    
+                                </form>
+                                
+                            </li>
+                        }
+
+                        
                     </ul>
                 </div>
             </div>

@@ -116,10 +116,13 @@ create procedure sp_encontrarUsuario
 	@email varchar(50),
 	@contrasena varchar(50)
 	as begin
-		SELECT u.id, u.nombre, u.apellido, u.email, u.contrasena, u.rol, u.estado
+		SELECT u.id, u.nombre, u.apellido, u.email, u.rol, u.estado, u.contrasena
 		FROM usuarios u
 		where email=@email and contrasena=@contrasena
 	end
+go
+
+drop proc sp_encontrarUsuario
 go
 
 CREATE PROCEDURE sp_ListarUsuariosSinEmpresa
@@ -194,9 +197,12 @@ create procedure sp_insertarEmpUsu
 	@idEmp int,
 	@idUsu int
 	as begin
-		if(not exists(select * from empresasUsuarios where idEmpresa=@idEmp and idUsuario=@idUsu))
+		if(not exists(select * from empresasUsuarios where idUsuario=@idUsu))
 			insert into empresasUsuarios (idEmpresa, idUsuario) values (@idEmp,@idUsu)
 	end
+go
+
+drop proc sp_insertarEmpUsu
 go
 
 create procedure sp_actualizarEmpUsu
@@ -223,12 +229,13 @@ go
 create procedure sp_listarEmpUsu
 	@id int
 	as begin
-		select eu.id, eu.idEmpresa, eu.idUsuario 
-		from empresasUsuarios eu
-		where id=@id
+		select eu.id, u.id AS UsuariosId, e.id AS EmpresasId, eu.idEmpresa as idEmpresa, eu.idUsuario as idUsuario
+		from empresasUsuarios eu, usuarios u, empresas e
+		where idUsuario=@id
 	end
 go
-
+--drop proc sp_listarEmpUsu
+--go
 create procedure sp_eliminarEmpUsu
 	@id int
 	as begin
@@ -248,16 +255,27 @@ go
 select * from empresas
 go
 
+select * from empresasUsuarios
+go
+
+insert into empresasUsuarios (idEmpresa, idUsuario) values (1,4)
+
+
+
 SELECT eu.id, eu.idEmpresa, eu.idUsuario, e.nombre AS NombreEmpresa, u.nombre AS NombreUsuario 
     FROM empresasUsuarios eu
     INNER JOIN empresas e ON eu.idEmpresa = e.id
     INNER JOIN usuarios u ON eu.idUsuario = u.id
 go
 
-exec sp_encontrarUsuario @email='dereklevilla45@gmail.com', @contrasena='1234578'
+exec sp_encontrarUsuario @email='dereklevilla45@gmail.com', @contrasena='12345678'
 go
 
 exec sp_insertarEmpUsu @idEmp=1,@idUsu=1
 go
 
 delete from empresasUsuarios where id=1
+
+delete from usuarios where id=2
+
+insert into empresasUsuarios (idEmpresa, idUsuario) values (1,3)

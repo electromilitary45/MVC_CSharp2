@@ -1,21 +1,62 @@
 ﻿@model EmpUsuView
+@inject IHttpContextAccessor contxt
+
 <h2>Crear Empresa Usuario</h2>
 
 @using (Html.BeginForm("Crear", "EmpresaUsuario", FormMethod.Post))
 {
-    <div>
-        <label for="idEmpresa">Empresa:</label>
-        <select id="empresaId" name="idEmpresa" required>
-            @foreach (var empresa in Model.Empresas)
+    <div mb-3>
+        <label class="form-label" for="idEmpresa">Empresa:</label>
+        <select class="form-select" id="empresaId" name="idEmpresa" required>
+            @switch (contxt.HttpContext.Session.GetInt32("Rol"))
             {
-                <option value="@empresa.Id">@empresa.Nombre</option>
+                case 3:
+                    @foreach (var empresa in Model.Empresas)
+                    {
+                        <option value="@empresa.Id">@empresa.Nombre</option>
+                    }
+                    break;
+                case 2:
+                    @foreach (var empresa in Model.Empresas)
+                    {
+                        @if (contxt.HttpContext.Session.GetInt32("idEmpresa") == (@empresa.Id))
+                        {
+                            <option value="@empresa.Id">@empresa.Nombre</option>
+                        }
+                        
+                    }
+                    break;
+
+            break;
+
             }
+
+            @*@foreach (var empresa in Model.Empresas)
+            {
+                @switch(contxt.HttpContext.Session.GetInt32("Rol"))
+                {
+                    case 3:
+                            <option value="@empresa.Id">@empresa.Nombre</option>
+                        break;
+                    case 2:
+                        @if(contxt.HttpContext.Session.GetInt32("idEmpresa") == (@empresa.Id))
+                        {
+                            <option value="@empresa.Id">@empresa.Nombre</option>
+                        }
+                        break;
+                }
+                break;
+
+                }
+
+        }*@
+
         </select>
     </div>
 
-    <div>
-        <label for="idUsuario">Usuario:</label>
-        <select id="idUsuario" name="idUsuario" required> 
+    <div class="mb-3">
+        <label class="form-label"for="idUsuario">Usuario:</label>
+        <select class="form-select"id="idUsuario" name="idUsuario" required> 
             @foreach (var usuario in Model.Usuarios)
             {
                 <option value="@usuario.Id">@usuario.Nombre</option>
@@ -23,6 +64,8 @@
         </select>
     </div>
 
-    <button type="submit">Crear</button>
+    <button type="submit" class="btn btn-outline-success">Crear</button>
+    
 }
 
+<a asp-action="Index"><button type="submit" class="btn btn-primary">Volver al Index</button></a>

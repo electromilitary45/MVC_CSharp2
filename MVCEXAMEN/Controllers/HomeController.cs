@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCEXAMEN.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MVCEXAMEN.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

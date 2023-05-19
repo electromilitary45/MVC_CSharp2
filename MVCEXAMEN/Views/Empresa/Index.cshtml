@@ -1,7 +1,13 @@
 ﻿@model List<Empresas>
+@inject IHttpContextAccessor contxt
+
 
 <h1>Empresas</h1>
-<a class="btn btn-success" asp-action="Crear">Crear Empresa</a>
+@if (contxt.HttpContext.Session.GetInt32("Rol") == 3)
+{
+    <a class="btn btn-success" asp-action="Crear">Crear Empresa</a>
+}
+
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -43,22 +49,24 @@
                     }
                 </td>
                 <td>
-                    <a asp-action="Editar" asp-route-id="@empresa.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
-                    @if (empresa.Estado == 1)
+                    @if (contxt.HttpContext.Session.GetInt32("Rol") == 3)
                     {
-                        <form asp-action="Desactivar" method="post">
-                            <input type="hidden" name="Id" value="@empresa.Id">
-                            <button type="submit" class="btn btn-outline-primary">Desactivar</button>
-                        </form>
+                        <a asp-action="Editar" asp-route-id="@empresa.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                        @if (empresa.Estado == 1)
+                        {
+                            <form asp-action="Desactivar" method="post">
+                                <input type="hidden" name="Id" value="@empresa.Id">
+                                <button type="submit" class="btn btn-outline-primary">Desactivar</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form asp-action="Activar" method="post">
+                                <input type="hidden" name="Id" value="@empresa.Id">
+                                <button type="submit" class="btn btn-outline-primary">Activar</button>
+                            </form>
+                        }
                     }
-                    else
-                    {
-                        <form asp-action="Activar" method="post">
-                            <input type="hidden" name="Id" value="@empresa.Id">
-                            <button type="submit" class="btn btn-outline-primary">Activar</button>
-                        </form>
-                    }
-
                 </td>
             </tr>
         }

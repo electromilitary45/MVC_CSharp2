@@ -4,6 +4,7 @@ using MVCEXAMEN.Models;
 
 namespace MVCEXAMEN.Controllers
 {
+   
     public class EmpresaController : Controller
     {
         private readonly DbCont _context;

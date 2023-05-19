@@ -1,4 +1,6 @@
 ﻿@model List<Usuarios>
+@inject IHttpContextAccessor contxt
+
 <h2>Usuarios</h2>
 <a class="btn btn-success" asp-action="Crear">Crear Usuario</a>
 
@@ -67,21 +69,44 @@ else
                         }
                     </td>
                     <td>
-                        <a asp-action="Editar" asp-route-id="@usuarios.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
-                        @if(usuarios.estado == 1)
+                        @switch (contxt.HttpContext.Session.GetInt32("Rol"))
                         {
-                            <form asp-action="Desactivar" method="post">
-                                <input type="hidden" name="Id" value="@usuarios.Id" />
-                                <button type="submit" class="btn btn-outline-primary">Desactivar</button>
-                            </form>
+                            case 3:
+                                <a asp-action="Editar" asp-route-id="@usuarios.Id"><button type="button" class="btn btn-outline-primary">Editar</button></a>
+                                @if (usuarios.estado == 1)
+                                {
+                                    <form asp-action="Desactivar" method="post">
+                                        <input type="hidden" name="Id" value="@usuarios.Id" />
+                                        <button type="submit" class="btn btn-outline-primary">Desactivar</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Activar" method="post">
+                                        <input type="hidden" name="Id" value="@usuarios.Id" />
+                                        <button type="submit" class="btn btn-outline-primary">Activar</button>
+                                    </form>
+                                }
+                                break;
+                            case 2:
+                                @if (usuarios.estado == 1)
+                                {
+                                    <form asp-action="Desactivar" method="post">
+                                        <input type="hidden" name="Id" value="@usuarios.Id" />
+                                        <button type="submit" class="btn btn-outline-primary">Desactivar</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-action="Activar" method="post">
+                                        <input type="hidden" name="Id" value="@usuarios.Id" />
+                                        <button type="submit" class="btn btn-outline-primary">Activar</button>
+                                    </form>
+                                }
+                                break;
+
                         }
-                        else
-                        {
-                            <form asp-action="Activar" method="post">
-                                <input type="hidden" name="Id" value="@usuarios.Id" />
-                                <button type="submit" class="btn btn-outline-primary">Activar</button>
-                            </form>
-                        }
+                        
                     </td>
                 </tr>
             }
